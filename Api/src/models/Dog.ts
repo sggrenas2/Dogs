@@ -1,8 +1,15 @@
-import {Model, Column, Table, CreatedAt, UpdatedAt, DataType} from 'sequelize-typescript';
+import { Model, Column, Table, CreatedAt, UpdatedAt, DataType, BelongsToMany } from 'sequelize-typescript';
+import { Temperament } from './Temperament';
+import { DogTemperament } from './DogTemperament';
 
 @Table
 export class Dog extends Model<Dog>{
 
+    //* table relation Temperament-Dog many to many 
+    @BelongsToMany(() => Temperament, () => DogTemperament)
+    Temperaments!: Array<Temperament & {DogTemperament: DogTemperament}>;
+
+    //* table columns
     @Column({
         type: DataType.STRING,
         allowNull: false,
